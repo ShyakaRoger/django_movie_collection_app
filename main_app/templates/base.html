@@ -2,12 +2,13 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
-  <title>{% block title %}MovieCollector{% endblock %}</title>
+  <title>{% block title %}Movie Collector{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/base.css' %}" />
   {% block head %}{% endblock %}
 </head>
@@ -17,7 +18,7 @@
     <div>
       <a href="{% url 'home' %}">
         <!-- If you add a logo image later, swap the span for an <img src="{% static 'img/logo.svg' %}" alt="MovieCollector" /> -->
-        <span>MovieCollector</span>
+        <span>Movie Collector</span>
       </a>
     </div>
 
@@ -25,6 +26,7 @@
       <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'movie-index' %}">All Movies</a></li>
+        <li><a href="{% url 'movie-create' %}">Add a Movie</a></li>
         <li><a href="{% url 'about' %}">About</a></li>
       </ul>
     </nav>
@@ -36,4 +38,5 @@
 
   {% block scripts %}{% endblock %}
 </body>
+
 </html>

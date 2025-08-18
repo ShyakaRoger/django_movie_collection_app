@@ -13,24 +13,24 @@
 
 <section class="card-container">
   {% for movie in movies %}
-    <a href="{% url 'movie-detail' movie.pk %}" class="card">
-      <div class="card-content">
-        <h2 class="card-title">{{ movie.title }}</h2>
-        <ul class="card-meta">
-          <li>Genre: {{ movie.get_genre_display|default:movie.genre }}</li>
-          <li>Year: {{ movie.release_year }}</li>
-          <li>Duration: {{ movie.duration }} mins</li>
-          <li>Rating: {{ movie.get_rating_display|default:movie.rating }}</li>
-        </ul>
-      </div>
-    </a>
-  {% empty %}
-    <div class="card empty">
-      <div class="card-content">
-        <p>No movies yet.</p>
-        <p><a href="{% url 'home' %}">Back to Home</a></p>
-      </div>
+  <a href="{% url 'movie-detail' movie.pk %}" class="card">
+    <div class="card-content">
+      <h2 class="card-title">{{ movie.title }}</h2>
+      <ul class="card-meta">
+        <li>Genre: {{ movie.get_genre_display|default:movie.genre }}</li>
+        <li>Year: {{ movie.release_year }}</li>
+        <li>Duration: {{ movie.duration }} mins</li>
+        <li>Rating: {{ movie.get_rating_display|default:movie.rating }}</li>
+      </ul>
     </div>
+  </a>
+  {% empty %}
+  <div class="card empty">
+    <div class="card-content">
+      <p>No movies yet.</p>
+      <p><a href="{% url 'home' %}">Back to Home</a></p>
+    </div>
+  </div>
   {% endfor %}
 </section>
 {% endblock %}

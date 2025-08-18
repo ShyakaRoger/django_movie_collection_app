@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 # create genre choices and rating choices for the Movie model
 # create movie model 
 GENRE_CHOICES = (
@@ -54,6 +54,10 @@ class Movie(models.Model):
 
     def __str__(self) -> str:
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse('movie-detail', kwargs={'movie_id': self.id})
+    
 
 # Added Model(new feaature)
 class Review(models.Model):
