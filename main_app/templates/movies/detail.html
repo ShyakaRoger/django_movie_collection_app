@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>{{ movie.title }}</h1>
-  <p>Genre: {{ movie.get_genre_display|default:movie.genre }}</p>
-  <p>Release year: {{ movie.release_year }}</p>
-  <p>Duration: {{ movie.duration }} mins</p>
+<h1>{{ movie.title }}</h1>
+<p>Genre: {{ movie.get_genre_display|default:movie.genre }}</p>
+<p>Release year: {{ movie.release_year }}</p>
+<p>Duration: {{ movie.duration }} mins</p>
+
+<div class="movie-actions">
+  <a href="{% url 'movie-update' movie.id %}" class="btn warn">Edit</a>
+  <a href="{% url 'movie-delete' movie.id %}" class="btn danger">Delete</a>
+</div>
+</div>
+
 {% endblock %}
