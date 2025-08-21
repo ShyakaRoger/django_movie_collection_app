@@ -35,7 +35,7 @@ def signup(request):
 def about(request):
     return render(request, 'about.html')
 
-@login_required
+
 def movie_index(request):
     # render the movies/index.html template with the movies data
     movies = Movie.objects.all().order_by('title')
