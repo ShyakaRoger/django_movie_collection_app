@@ -20,4 +20,21 @@ urlpatterns = [
 
     #deleting a review
     path('reviews/<int:review_id>/delete/', views.delete_review, name='review-delete'),
+
+    #view user watchlists
+    path('watchlists/', views.watchlist_index, name='user-watchlists'),
+
+    # create multiple watchlists
+    path('watchlists/create/', views.WatchlistCreate.as_view(), name = 'watchlist-create'),
+
+    path('watchlists/<int:pk>/', views.watchlist_detail, name='watchlist-detail'),
+
+    path('watchlists/<int:pk>/update/', views.WatchlistUpdate.as_view(), name='watchlist-update'),
+
+
+    #add movie to watchlist
+    path('movie/<int:movie_id>/add_to_watchlist', views.add_to_watchlist, name='add_to_watchlist'),
+
+    #remove movie from watchlist
+    path('movie/<int:movie_id>/remove_from_watchlist', views.remove_from_watchlist, name='remove_from_watchlist'),
 ]

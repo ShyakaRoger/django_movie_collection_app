@@ -28,6 +28,7 @@
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'movie-index' %}">All Movies</a></li>
         <li><a href="{% url 'movie-create' %}">Add a Movie</a></li>
+        <li><a href="{% url 'user-watchlists' %}">My Watchlists</a></li>
         <li><a href="{% url 'all-reviews' %}">All Reviews</a></li>
         <li><a href="{% url 'about' %}">About</a></li>
         <li>
@@ -47,7 +48,9 @@
   </header>
 
   <main>
-    {% block content %}{% endblock %}
+    {% block content %}
+
+    {% endblock content%}
   </main>
 
   {% block scripts %}{% endblock %}

@@ -51,7 +51,8 @@ class Movie(models.Model):
     )
     comments = models.TextField(max_length=500, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     def __str__(self) -> str:
         return self.title
     
@@ -59,7 +60,7 @@ class Movie(models.Model):
         return reverse('movie-detail', kwargs={'movie_id': self.id})
     
 
-# Added Model(new feaature)
+# Added Model(new feature)
 class Review(models.Model):
     movie = models.ForeignKey(
         Movie, on_delete=models.CASCADE, related_name='reviews'
@@ -73,3 +74,17 @@ class Review(models.Model):
 
     def __str__(self) -> str:
         return f'{self.movie.title} — {self.author.username} ({self.rating}/5)'
+    
+class Watchlist(models.Model):
+
+    title = models.CharField(max_length=100, default='My Watchlist')
+
+    movies = models.ManyToManyField(Movie, related_name='watchlists')
+
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='watchlists'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user.username}'s Watchlist"

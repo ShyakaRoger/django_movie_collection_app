@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ watchlist.title }}</h1>
+<ul>
+    {% for movie in watchlist.movies.all %}
+    <li>{{ movie.title }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'watchlist-update' watchlist.id %}">Edit this Watchlist</a>
+<a href="{% url 'watchlist-create' %}">Create Another Watchlist</a>
+
+{% endblock %}
