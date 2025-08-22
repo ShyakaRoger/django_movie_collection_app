@@ -5,7 +5,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Movie, Review
+from django.contrib import messages
+from .models import Movie, Review, Watchlist
 from .forms import ReviewForm
 
 
@@ -30,8 +31,8 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'signup.html', context)
 
+# Define the about view function
 
-# ---- PUBLIC READ ----
 def about(request):
     return render(request, 'about.html')
 
@@ -41,6 +42,7 @@ def movie_index(request):
     return render(request, 'movies/index.html', {'movies': movies})
 
 def movie_detail(request, movie_id):
+
     # visible to everyone
     # use select/prefetch so reviews/users load efficiently
     movie = get_object_or_404(
@@ -53,6 +55,10 @@ def movie_detail(request, movie_id):
 
 
 # ---- WRITE (login required) ----
+
+
+# Add review feature
+
 @login_required
 def add_review(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
@@ -71,6 +77,9 @@ def add_review(request, movie_id):
         form = ReviewForm()
     return render(request, 'movies/detail.html', {'movie': movie, 'form': form, 'mode': 'Add'})
 
+
+#All reviews
+@login_required
 def all_reviews(request):
     # visible to everyone
     reviews = Review.objects.select_related('movie', 'author').order_by('-created_at')
@@ -83,6 +92,44 @@ def delete_review(request, review_id):
     review.delete()
     return redirect('movie-detail', movie_id=movie_id)
 
+@login_required
+def watchlist_index(request):
+        user_watchlists = Watchlist.objects.filter(user=request.user)
+        return render(request, 'watchlists/watchlist.html', {'watchlists': user_watchlists})
+
+@login_required
+def watchlist_detail(request, pk):
+    watchlist = get_object_or_404(Watchlist, id=pk, user=request.user)
+    return render(request, 'watchlists/detail.html', {
+        'watchlist': watchlist
+    })
+
+@login_required
+def add_to_watchlist(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    user_watchlist, created = Watchlist.objects.get_or_create(user=request.user) 
+
+    if movie in user_watchlist.movies.all():
+        messages.error(request, f"{movie.title} is already in your watchlist.") 
+    else:
+        user_watchlist.movies.add(movie) 
+        messages.success(request, f"{movie.title} added to your watchlist.") 
+    # Redirect back to the movie detail page 
+    return redirect('movie-detail', movie_id=movie_id)
+
+@login_required
+def remove_from_watchlist(request, watchlist_movie_id, watchlist_id):
+    Watchlist.objects.get(id=watchlist_id).movies.remove(watchlist_movie_id)
+    return render(request, 'watchlists/watchlist.html')
+    
+class WatchlistCreate(LoginRequiredMixin, CreateView):
+    model = Watchlist
+    fields = '__all__'
+
+
+class WatchlistUpdate(LoginRequiredMixin, UpdateView):
+    model = Watchlist
+    fields = '__all__'
 
 class MovieCreate(LoginRequiredMixin, CreateView):
     model = Movie
@@ -90,7 +137,7 @@ class MovieCreate(LoginRequiredMixin, CreateView):
 
 class MovieUpdate(LoginRequiredMixin, UpdateView):
     model = Movie
-    fields = '__all__'
+    fields = ['title', 'genre', 'duration', 'release_year', 'rating', 'comments']
 
 class MovieDelete(LoginRequiredMixin, DeleteView):
     model = Movie

@@ -5,7 +5,24 @@
 <p>Release year: {{ movie.release_year }}</p>
 <p>Duration: {{ movie.duration }} mins</p>
 
+
+
+
 {% if user.is_authenticated %}
+<form method="POST" action="{% url 'add_to_watchlist' movie.id %}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary">Add to Watchlist</button>
+</form>
+{% endif %}
+
+{% if user.is_authenticated %}
+<form method="POST" action="{% url 'remove_from_watchlist' movie.id %}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary">Remove from Watchlist</button>
+</form>
+{% endif %}
+
+
 <div class="movie-actions">
   <a href="{% url 'movie-update' movie.id %}" class="btn warn">Edit</a>
   <a href="{% url 'movie-delete' movie.id %}" class="btn danger">Delete</a>
@@ -13,14 +30,15 @@
 {% endif %}
 
 {% if movie.description %}
-  <hr>
-  <h3>Description</h3>
-  <p>{{ movie.description|linebreaksbr }}</p>
+<hr>
+<h3>Description</h3>
+<p>{{ movie.description|linebreaksbr }}</p>
 {% endif %}
 
 <h3>Reviews</h3>
 <ul class="reviews">
   {% for review in movie.reviews.all %}
+
     <li>
       <strong>{{ review.author.username }}</strong> — {{ review.rating }}/5
       {% if review.comment %}
@@ -38,29 +56,29 @@
       {% endif %}
     </li>
   {% empty %}
-    <li>No reviews yet.</li>
+  <li>No reviews yet.</li>
   {% endfor %}
 </ul>
 
 <h3>Add a review</h3>
 {% if user.is_authenticated %}
-  <form action="{% url 'review-add' movie.id %}" method="POST">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
+<form action="{% url 'review-add' movie.id %}" method="POST">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
 
-    <div>
-      <label for="{{ form.rating.id_for_label }}">Rating</label>
-      {{ form.rating.errors }}{{ form.rating }}
-    </div>
+  <div>
+    <label for="{{ form.rating.id_for_label }}">Rating</label>
+    {{ form.rating.errors }}{{ form.rating }}
+  </div>
 
-    <div>
-      <label for="{{ form.comment.id_for_label }}">Comment</label>
-      {{ form.comment.errors }}{{ form.comment }}
-    </div>
+  <div>
+    <label for="{{ form.comment.id_for_label }}">Comment</label>
+    {{ form.comment.errors }}{{ form.comment }}
+  </div>
 
-    <button type="submit">Submit</button>
-  </form>
+  <button type="submit">Submit</button>
+</form>
 {% else %}
-  <p><a href="{% url 'login' %}">Log in</a> to add a review.</p>
+<p><a href="{% url 'login' %}">Log in</a> to add a review.</p>
 {% endif %}
 {% endblock %}
