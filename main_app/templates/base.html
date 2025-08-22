@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
-  <title>{% block title %}Movie Collector{% endblock %}</title>
+  <title>{% block title %}Movie-Collector{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/base.css' %}" />
   {% block head %}{% endblock %}
 </head>
@@ -18,32 +18,33 @@
     <div>
       <a href="{% url 'home' %}">
         <!-- If you add a logo image later, swap the span for an <img src="{% static 'img/logo.svg' %}" alt="MovieCollector" /> -->
-        <span>Movie Collector</span>
+        <span>Movie-Collector</span>
       </a>
     </div>
 
     <nav>
-      <ul>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'movie-index' %}">All Movies</a></li>
-        <li><a href="{% url 'movie-create' %}">Add a Movie</a></li>
-        <li><a href="{% url 'all-reviews' %}">All Reviews</a></li>
-        <li><a href="{% url 'about' %}">About</a></li>
-        <li>
-          <form id="logout-form" method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">Log out</button>
-          </form>
-        </li>
+  <ul>
+    
+    <li><a href="{% url 'about' %}">About</a></li>
+    <li><a href="{% url 'movie-index' %}">All Movies</a></li>
+    <li><a href="{% url 'all-reviews' %}">Reviews</a></li>
 
-        {% else %}
-        <li><a href="{% url 'about' %}">About</a></li>
-        <li><a href="{% url 'home' %}">Login</a></li>
-        <li><a href="{% url 'signup' %}">Sign Up</a></li>
-        {% endif %}
-      </ul>
-    </nav>
+    {% if user.is_authenticated %}
+      
+      <li><a href="{% url 'movie-create' %}">Add a Movie</a></li>
+      <li>
+        <form id="logout-form" method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit">Log out</button>
+        </form>
+      </li>
+    {% else %}
+      <li><a href="{% url 'home' %}">Login</a></li>
+      <li><a href="{% url 'signup' %}">Sign Up</a></li>
+    {% endif %}
+  </ul>
+</nav>
+
   </header>
 
   <main>

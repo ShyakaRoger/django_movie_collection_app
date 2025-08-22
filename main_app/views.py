@@ -31,31 +31,34 @@ def signup(request):
     return render(request, 'signup.html', context)
 
 
-# Define the about view function
+# ---- PUBLIC READ ----
 def about(request):
     return render(request, 'about.html')
 
-@login_required
 def movie_index(request):
-    # render the movies/index.html template with the movies data
+    # visible to everyone
     movies = Movie.objects.all().order_by('title')
     return render(request, 'movies/index.html', {'movies': movies})
 
-@login_required
 def movie_detail(request, movie_id):
+    # visible to everyone
+    # use select/prefetch so reviews/users load efficiently
+    movie = get_object_or_404(
+        Movie.objects.prefetch_related('reviews__author'),
+        id=movie_id
+    )
+    # always provide a form so logged-in users can post without error
+    form = ReviewForm()
+    return render(request, 'movies/detail.html', {'movie': movie, 'form': form})
 
-    #I changed pk back to movie_id. I was getting an error that it wasnt matching up to the url when navigating to a movie detail
-    movie = get_object_or_404(Movie, id=movie_id)
-    return render(request, 'movies/detail.html', {'movie': movie})
 
-
-# Add review feature
+# ---- WRITE (login required) ----
 @login_required
 def add_review(request, movie_id):
-    movie=get_object_or_404(Movie, id=movie_id)
+    movie = get_object_or_404(Movie, id=movie_id)
 
-    if request.method =='POST':
-        form=ReviewForm(request.POST)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
         if form.is_valid():
             Review.objects.create(
                 movie=movie,
@@ -64,25 +67,21 @@ def add_review(request, movie_id):
                 comment=form.cleaned_data['comment']
             )
             return redirect('movie-detail', movie_id=movie.id)
-    else:   
+    else:
         form = ReviewForm()
     return render(request, 'movies/detail.html', {'movie': movie, 'form': form, 'mode': 'Add'})
 
-
-#All reviews
-@login_required
 def all_reviews(request):
-    reviews = Review.objects.all().order_by('-created_at')
+    # visible to everyone
+    reviews = Review.objects.select_related('movie', 'author').order_by('-created_at')
     return render(request, 'reviews/all_reviews.html', {'reviews': reviews})   
- 
-# Adding review delete funtionality
+
 @login_required
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     movie_id = review.movie.id
     review.delete()
     return redirect('movie-detail', movie_id=movie_id)
-
 
 
 class MovieCreate(LoginRequiredMixin, CreateView):
@@ -96,5 +95,3 @@ class MovieUpdate(LoginRequiredMixin, UpdateView):
 class MovieDelete(LoginRequiredMixin, DeleteView):
     model = Movie
     success_url = '/movies/'
-
-

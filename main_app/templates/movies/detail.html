@@ -5,11 +5,12 @@
 <p>Release year: {{ movie.release_year }}</p>
 <p>Duration: {{ movie.duration }} mins</p>
 
+{% if user.is_authenticated %}
 <div class="movie-actions">
   <a href="{% url 'movie-update' movie.id %}" class="btn warn">Edit</a>
   <a href="{% url 'movie-delete' movie.id %}" class="btn danger">Delete</a>
 </div>
-
+{% endif %}
 
 {% if movie.description %}
   <hr>
@@ -26,13 +27,15 @@
         <div>{{ review.comment|linebreaksbr }}</div>
       {% endif %}
       <small>{{ review.created_at }}</small>
-      
+
+      {% if user.is_authenticated %}
       <div>
         <form action="{% url 'review-delete' review.id %}" method="POST">
           {% csrf_token %}
           <button type="submit">Delete Review</button>
         </form>
       </div>
+      {% endif %}
     </li>
   {% empty %}
     <li>No reviews yet.</li>
