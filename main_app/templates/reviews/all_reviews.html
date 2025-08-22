@@ -3,31 +3,32 @@
 <h1>All Reviews</h1>
 
 {% if reviews %}
-    <div class="reviews-list">
-        {% for review in reviews %}
-        <div class="review-card">
-            <h3>
-                <a href="{% url 'movie-detail' review.movie.id %}">
-                    {{ review.movie.title }}
-                </a>
-            </h3>
-            <p>
-                <strong>{{ review.author.username }}</strong> — {{ review.rating }}/5
-                <small>({{ review.created_at }})</small>
-            </p>
-            {% if review.comment %}
-                <p>{{ review.comment|linebreaksbr }}</p>
-            {% endif %}
-            
-            <!-- Simple delete button -->
-            <form action="{% url 'review-delete' review.id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit">Delete Review</button>
-            </form>
-        </div>
-        {% endfor %}
-    </div>
+  <div class="reviews-list">
+    {% for review in reviews %}
+      <div class="review-card">
+        <h3>
+          <a href="{% url 'movie-detail' review.movie.id %}">
+            {{ review.movie.title }}
+          </a>
+        </h3>
+        <p>
+          <strong>{{ review.author.username }}</strong> — {{ review.rating }}/5
+          <small>({{ review.created_at }})</small>
+        </p>
+        {% if review.comment %}
+          <p>{{ review.comment|linebreaksbr }}</p>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <form action="{% url 'review-delete' review.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit">Delete Review</button>
+        </form>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
 {% else %}
-    <p>No reviews yet.</p>
+  <p>No reviews yet.</p>
 {% endif %}
 {% endblock %}
