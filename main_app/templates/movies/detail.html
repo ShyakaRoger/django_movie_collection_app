@@ -8,12 +8,12 @@
 
 
 
-{% if user.is_authenticated %}
+<!-- {% if user.is_authenticated %}
 <form method="POST" action="{% url 'add_to_watchlist' movie.id %}">
   {% csrf_token %}
   <button type="submit" class="btn btn-primary">Add to Watchlist</button>
 </form>
-{% endif %}
+{% endif %} -->
 
 {% if user.is_authenticated %}
 <form method="POST" action="{% url 'remove_from_watchlist' movie.id %}">
@@ -22,7 +22,7 @@
 </form>
 {% endif %}
 
-
+{% if user.is_authenticated %}
 <div class="movie-actions">
   <a href="{% url 'movie-update' movie.id %}" class="btn warn">Edit</a>
   <a href="{% url 'movie-delete' movie.id %}" class="btn danger">Delete</a>
