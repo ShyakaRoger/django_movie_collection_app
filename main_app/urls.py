@@ -37,4 +37,7 @@ urlpatterns = [
 
     #remove movie from watchlist
     path('movie/<int:movie_id>/remove_from_watchlist', views.remove_from_watchlist, name='remove_from_watchlist'),
+
+    #custom login from inside reviews
+    path('accounts/login/', views.custom_login),
 ]
