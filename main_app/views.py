@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import views as auth_views
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -13,6 +14,10 @@ from .forms import ReviewForm
 # Define the home view function
 class Home(LoginView):
     template_name = 'home.html'
+
+# custom login made inside reviews
+def custom_login(request):
+    return redirect('home')
 
 def signup(request):
     error_message = ''
@@ -54,7 +59,7 @@ def movie_detail(request, movie_id):
     return render(request, 'movies/detail.html', {'movie': movie, 'form': form})
 
 
-# ---- WRITE (login required) ----
+
 
 
 # Add review feature
@@ -79,7 +84,7 @@ def add_review(request, movie_id):
 
 
 #All reviews
-@login_required
+
 def all_reviews(request):
     # visible to everyone
     reviews = Review.objects.select_related('movie', 'author').order_by('-created_at')

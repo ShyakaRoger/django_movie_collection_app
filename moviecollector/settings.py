@@ -117,7 +117,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'movie-index'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'movie-index'
 
 # Default primary key field type
