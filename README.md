@@ -26,7 +26,7 @@ Created by **Kylie** and **Roger**
 ## Tech Stack
 
 - **Backend:** Django, Python
-- **Database:** SQLite (default), easily swappable for PostgreSQL
+- **Database:** SQLite (default),switched to PostgreSQL
 - **Frontend:** Django templates (HTML, CSS, optional SVGs for movie covers)
 - **Auth:** Django’s built-in session-based authentication (Signup/Login/Logout)
 
