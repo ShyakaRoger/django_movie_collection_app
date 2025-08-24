@@ -1,0 +1,37 @@
+.features {
+    list-style: none;
+    padding: 0;
+}
+
+.features li {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+}
+
+.btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-accent {
+    background-color: #ff5722;
+    color: white;
+}
+
+
+.how-it-works {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: #f9f9f9;
+}
+
+.user-action {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: #eee;
+}

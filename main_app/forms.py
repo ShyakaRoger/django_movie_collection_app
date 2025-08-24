@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review, Watchlist
+from .models import Review, Watchlist, Movie
 
 class ReviewForm(forms.ModelForm):
     class Meta:
@@ -8,10 +8,22 @@ class ReviewForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'rows': 4}),
         }
+
 class WatchlistForm(forms.ModelForm):
+    movies = forms.ModelMultipleChoiceField(
+        queryset=Movie.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
     class Meta:
         model = Watchlist
-        fields = ['title', 'movies']  # Allow users to select movies
-        widgets = {
-            'movies': forms.CheckboxSelectMultiple(),  # Display movies as checkboxes
-        }
+        fields = ['title', 'movies'] 
+
+
+class MovieForm(forms.ModelForm):
+    class Meta:
+        model = Movie
+        fields = ['title', 'genre', 'duration', 'release_year']
+      
+        
+        

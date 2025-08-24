@@ -1,23 +1,41 @@
-
-
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .card {
-  display: block;             
+  display: block;
   border: 1px solid #eee;
   border-radius: 8px;
-  padding: 12px;
+  padding: 1rem;
   background: #fafafa;
-  text-decoration: none;      
+  text-decoration: none;
   color: inherit;
 }
 
-.card:hover { background: #f3f6fc; }
+.card:hover {
+  background: #f3f6fc;
+}
 
-.card-title { margin: 0 0 8px; font-size: 1.1rem; }
-.card-meta { margin: 0; padding-left: 16px; color: #555; }
-.card.empty { text-align: center; }
+.card-title {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.card-meta {
+  margin: 0;
+  padding-left: 16px;
+  color: #555;
+}
+
+.card.empty {
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .card-container {
+    padding: 0.5rem;
+  }
+}

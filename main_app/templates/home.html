@@ -2,20 +2,39 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}" />
 {% endblock %} {% block content %}
 
-<section class="logo-container">
-    <div class="movie-container">
-    </div>
-</section>
+<section class="intro-container">
+    <h1>🎥 Welcome to Movie-Collector</h1>
+    <p>Track what you watch. Build epic watchlists. Review and discover new favorites.</p>
 
-{% if not user.is_authenticated %}
-<section>
+    {% if user.is_authenticated %}
+    <section class="user-action">
+        <a href="{% url 'user-watchlists' %}" class="btn btn-primary">View My Watchlists</a>
+        <h3>🍿 Ready to track your next favorite film?</h3>
+        <a href="{% url 'movie-create' %}" class="btn btn-accent">Add a Movie</a>
+    </section>
+    {% else %}
+
     <form action="{% url 'home' %}" method="post" class="login">
         <h1>Login</h1>
         {% csrf_token %} {{ form.as_p }}
         <input type="hidden" name="next" value="{{ next }}" />
         <button type="submit" class="btn submit">Login</button>
     </form>
+
+    <h2>Don't have an account? Sign up now!</h2>
+    <a href="{% url 'signup' %}" class="'btn btn-accent">Create an Account</a>
+
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <ul class="features">
+            <li>📚 Create and manage custom watchlists</li>
+            <li>📝 Add your favorite movies with details and ratings</li>
+            <li>💬 Review and explore what others are watching</li>
+        </ul>
+    </section>
 </section>
 {% endif %}
+
+
 
 {% endblock %}

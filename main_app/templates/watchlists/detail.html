@@ -1,13 +1,42 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/movies/movie-index.css' %}" />
+{% endblock %}
+
 {% block content %}
 <h1>{{ watchlist.title }}</h1>
-<ul>
+
+
+
+<section class="card-container">
     {% for movie in watchlist.movies.all %}
-    <li>{{ movie.title }}</li>
+    <a href="{% url 'movie-detail' movie.pk %}" class="card">
+        <div class="card-content">
+            <h2 class="card-title">{{ movie.title }}</h2>
+            <form method="POST" action="{% url 'remove_from_watchlist' watchlist.id movie.id %}"
+                style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-link text-danger" title="Remove">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </form>
+        </div>
+    </a>
+
+
+
+    {% empty %}
+    <li>No movies in this watchlist yet.</li>
     {% endfor %}
-</ul>
+    </ul>
+    {% if user.is_authenticated %}
+    <div class="watchlist-actions">
+        <a href="{% url 'watchlist-update' watchlist.id %}" class="btn warn">Edit Watchlist</a>
+        <a href="{% url 'watchlist-delete' watchlist.id %}" class="btn danger">Delete Watchlist</a>
+    </div>
+    <a href="{% url 'user-watchlists' %}">Back</a>
+    {% endif %}
 
-<a href="{% url 'watchlist-update' watchlist.id %}">Edit this Watchlist</a>
-<a href="{% url 'watchlist-create' %}">Create Another Watchlist</a>
-
-{% endblock %}
+    {% endblock %}

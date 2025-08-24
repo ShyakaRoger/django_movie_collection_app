@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+
 # create genre choices and rating choices for the Movie model
 # create movie model 
 GENRE_CHOICES = (
     ('AC', 'Action'),
     ('AD', 'Adventure'),
     ('AN', 'Animation'),
+    ('AM', 'Anime'),
     ('C',  'Comedy'),
     ('CR', 'Crime'),
     ('D',  'Documentary'),
@@ -22,6 +24,7 @@ GENRE_CHOICES = (
     ('R',  'Romance'),
     ('SF', 'Science Fiction'),
     ('T',  'Thriller'),
+    ('WA', 'War'),
     ('W',  'Western'),
     ('O',  'Other'),
 )
@@ -52,6 +55,7 @@ class Movie(models.Model):
     comments = models.TextField(max_length=500, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    
 
     
     def __str__(self) -> str:
@@ -89,3 +93,6 @@ class Watchlist(models.Model):
     
     def __str__(self):
         return f"{self.user.username}'s Watchlist"
+    
+    def get_absolute_url(self):
+        return reverse('watchlist-detail', kwargs={'pk': self.id})

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+<link rel="stylesheet" href="{% static 'css/movies/form.css' %}" />
 {% endblock %}
 {% block content %}
 
@@ -11,15 +11,43 @@
     {% else %}
     <h1>Add a Movie</h1>
     {% endif %}
-    <img src="" alt="" />
 </div>
 
-<form action="" method="post" class="form-container">
+<form method="POST" class="form-container">
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <button type="submit" class="btn submit">Submit</button>
-</form>
 
+    <div class="form-group">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+        {{ form.title.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.genre.label_tag }}
+        {{ form.genre }}
+        {{ form.genre.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.duration.label_tag }}
+        {{ form.duration }}
+        {{ form.duration.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.release_year.label_tag }}
+        {{ form.release_year }}
+        {{ form.release_year.errors }}
+    </div>
+
+    <div class="form-group">
+        {{ form.rating.label_tag }}
+        {{ form.rating }}
+        {{ form.rating.errors }}
+    </div>
+
+    <button type="submit" class="btn submit">
+        {% if form.instance.pk %}Update Movie{% else %}Add Movie{% endif %}
+    </button>
+</form>
 {% endblock %}

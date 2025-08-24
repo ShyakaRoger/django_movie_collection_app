@@ -1,9 +1,17 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %}{% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %} {% block content %}
+
 <h1>About the Movie Collector</h1>
-<hr />
-<p class="page-content">
-    I like long romantic walks down the produce aisle. Also, I am currently job
-    seeking!
-</p>
+<section class="intro-container">
+    <h1>🎥 Welcome to Movie-Collector</h1>
+    <p>Track what you watch. Build epic watchlists. Review and discover new favorites.</p>
+    <h2>How It Works</h2>
+    <ul class="features">
+        <li>📚 Create and manage custom watchlists</li>
+        <li>📝 Add your favorite movies with details and ratings</li>
+        <li>💬 Review and explore what others are watching</li>
+    </ul>
+
+</section>
 {% endblock %}
