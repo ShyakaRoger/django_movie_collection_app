@@ -198,6 +198,8 @@ class MovieUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'main_app/movie_form.html'
     success_url = '/movies/'
 
+  
+
 
 class MovieDelete(LoginRequiredMixin, DeleteView):
     model = Movie
