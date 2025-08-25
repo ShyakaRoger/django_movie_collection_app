@@ -11,6 +11,7 @@ from django.contrib import messages
 from .models import Movie, Review, Watchlist
 from .forms import ReviewForm, WatchlistForm, MovieForm
 
+DEFAULT_WATCHLIST_TITLE = "My Watchlist"
 
 # Define the home view function
 class Home(LoginView):
@@ -53,10 +54,25 @@ def movie_detail(request, movie_id):
         Movie.objects.prefetch_related('reviews__author'),
         id=movie_id
     )
-    user_watchlists = Watchlist.objects.filter(user=request.user)
-    # always provide a form so logged-in users can post without error
+
+    # Only query watchlists if authenticated
+    if request.user.is_authenticated:
+        # ensure the user has at least one watchlist so the select isn't empty
+        wl_qs = Watchlist.objects.filter(user=request.user).order_by("title")
+        if not wl_qs.exists():
+            Watchlist.objects.create(user=request.user, title=DEFAULT_WATCHLIST_TITLE)
+            wl_qs = Watchlist.objects.filter(user=request.user).order_by("title")
+        user_watchlists = wl_qs
+    else:
+        user_watchlists = Watchlist.objects.none()
+
+    # Provide the review form (you can still guard posting in the POST view)
     form = ReviewForm()
-    return render(request, 'movies/detail.html', {'movie': movie, 'form': form, 'watchlists': user_watchlists})
+
+    return render(
+        request,
+        'movies/detail.html',
+        {'movie': movie, 'form': form, 'watchlists': user_watchlists})
 
 
 # Add review feature

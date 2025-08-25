@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main_app', '0004_add_user_to_movie'),
+        ('main_app', '0004_movie_poster_url'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 

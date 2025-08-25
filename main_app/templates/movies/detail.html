@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% load static %}
 
 {% block head %}
@@ -10,96 +9,109 @@
 <div class="movie-detail-header">
   <h1>{{ movie.title }}</h1>
   {% if movie.poster_url %}
-  <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster" class="poster-img">
+    <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster" class="poster-img">
   {% else %}
-  <img src="{% static 'images/default-poster.jpg' %}" alt="No poster available" class="poster-img">
+    <img src="{% static 'images/default-poster.jpg' %}" alt="No poster available" class="poster-img">
   {% endif %}
 </div>
 
-<form method="POST" action="{% url 'add_to_watchlist' movie.id %}">
-  {% csrf_token %}
-  <div class="select-wrapper">
-    <select id="watchlist" name="watchlist_id" required>
-      <option selected disabled value="">Add to Watchlist</option>
-      {% for watchlist in watchlists %}
-      <option value="{{ watchlist.id }}">{{ watchlist.title }}</option>
-      {% endfor %}
-    </select>
-  </div>
-  <button type="submit" class="btn btn-primary">+</button>
-</form>
-
-{% if messages %}
-<ul class="messages">
-  {% for message in messages %}
-  <li class="alert alert-{{ message.tags }}">{{ message }}</li>
-  {% endfor %}
-</ul>
+{# --- Watchlist add form --- #}
+{% if user.is_authenticated %}
+  {% if watchlists and watchlists|length > 0 %}
+    <form method="POST" action="{% url 'add_to_watchlist' movie.id %}" class="watchlist-form">
+      {% csrf_token %}
+      <div class="select-wrapper">
+        <label for="watchlist" class="sr-only">Add to Watchlist</label>
+        <select id="watchlist" name="watchlist_id" required>
+          <option selected disabled value="">Add to Watchlist</option>
+          {% for watchlist in watchlists %}
+            <option value="{{ watchlist.id }}">{{ watchlist.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" aria-label="Add movie to selected watchlist">+</button>
+    </form>
+  {% else %}
+    <div class="empty-watchlist-hint">
+      <p>You don’t have a watchlist yet.</p>
+      <form method="post" action="{% url 'watchlist-create-default' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn">Create “My Watchlist”</button>
+      </form>
+    </div>
+  {% endif %}
+{% else %}
+  <p><a href="{% url 'login' %}">Sign in</a> to add this movie to your watchlist.</p>
 {% endif %}
 
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="alert alert-{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
 
 <p>Genre: {{ movie.get_genre_display|default:movie.genre }}</p>
 <p>Release year: {{ movie.release_year }}</p>
 <p>Duration: {{ movie.duration }} mins</p>
 
-
 {% if user.is_authenticated %}
-<div class="movie-actions">
-  <a href="{% url 'movie-update' movie.id %}" class="btn warn">Edit Movie</a>
-  <a href="{% url 'movie-delete' movie.id %}" class="btn danger">Delete Movie</a>
-</div>
+  <div class="movie-actions">
+    <a href="{% url 'movie-update' movie.id %}" class="btn warn">Edit Movie</a>
+    <a href="{% url 'movie-delete' movie.id %}" class="btn danger">Delete Movie</a>
+  </div>
 {% endif %}
 
 {% if movie.description %}
-<hr>
-<h3>Description</h3>
-<p>{{ movie.description|linebreaksbr }}</p>
+  <hr>
+  <h3>Description</h3>
+  <p>{{ movie.description|linebreaksbr }}</p>
 {% endif %}
 
 <h3>Reviews</h3>
 <ul class="reviews">
   {% for review in movie.reviews.all %}
+    <li>
+      <strong>{{ review.author.username }}</strong> — {{ review.rating }}/5
+      {% if review.comment %}
+        <div>{{ review.comment|linebreaksbr }}</div>
+      {% endif %}
+      <small>{{ review.created_at }}</small>
 
-  <li>
-    <strong>{{ review.author.username }}</strong> — {{ review.rating }}/5
-    {% if review.comment %}
-    <div>{{ review.comment|linebreaksbr }}</div>
-    {% endif %}
-    <small>{{ review.created_at }}</small>
-
-    {% if user.is_authenticated %}
-    <div>
-      <form action="{% url 'review-delete' review.id %}" method="POST">
-        {% csrf_token %}
-        <button type="submit">Delete Review</button>
-      </form>
-    </div>
-    {% endif %}
-  </li>
+      {% if user.is_authenticated %}
+        <div>
+          <form action="{% url 'review-delete' review.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Delete Review</button>
+          </form>
+        </div>
+      {% endif %}
+    </li>
   {% empty %}
-  <li>No reviews yet.</li>
+    <li>No reviews yet.</li>
   {% endfor %}
 </ul>
 
 <h3>Add a review</h3>
 {% if user.is_authenticated %}
-<form action="{% url 'review-add' movie.id %}" method="POST">
-  {% csrf_token %}
-  {{ form.non_field_errors }}
+  <form action="{% url 'review-add' movie.id %}" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
 
-  <div>
-    <label for="{{ form.rating.id_for_label }}">Rating</label>
-    {{ form.rating.errors }}{{ form.rating }}
-  </div>
+    <div>
+      <label for="{{ form.rating.id_for_label }}">Rating</label>
+      {{ form.rating.errors }}{{ form.rating }}
+    </div>
 
-  <div>
-    <label for="{{ form.comment.id_for_label }}">Comment</label>
-    {{ form.comment.errors }}{{ form.comment }}
-  </div>
+    <div>
+      <label for="{{ form.comment.id_for_label }}">Comment</label>
+      {{ form.comment.errors }}{{ form.comment }}
+    </div>
 
-  <button type="submit">Submit</button>
-</form>
+    <button type="submit">Submit</button>
+  </form>
 {% else %}
-<p><a href="{% url 'login' %}">Log in</a> to add a review.</p>
+  <p><a href="{% url 'login' %}">Log in</a> to add a review.</p>
 {% endif %}
 {% endblock %}
