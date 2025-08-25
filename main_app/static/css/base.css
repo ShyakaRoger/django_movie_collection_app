@@ -1,187 +1,205 @@
 /* static/css/base.css */
 /* CSS Variables for consistent theming */
+.galindo-regular {
+  font-family: "Galindo", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 :root {
-    --primary-color: #1f6feb;
-    --secondary-color: #8A2BE2; /* Purple accent */
-    --accent-color: #FF6B6B;    /* Coral accent */
-    --dark-color: #2D3748;      /* Dark blue-gray */
-    --light-color: #F7FAFC;     /* Light gray */
-    --border-color: #E2E8F0;    /* Light border */
-    --text-color: #2D3748;      /* Dark text */
-    --link-hover-color: #0056b3;
-    --font-main: 'Arial', sans-serif;
-    --font-size-base: 16px;
-    --border-radius: 12px;      /* Slightly more rounded */
-    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
+  --primary-color: #1f6feb;
+  --secondary-color: #8A2BE2;
+  /* Purple accent */
+  --accent-color: #FF6B6B;
+  /* Coral accent */
+  --dark-color: #2D3748;
+  /* Dark blue-gray */
+  --light-color: #F7FAFC;
+  /* Light gray */
+  --border-color: #E2E8F0;
+  /* Light border */
+  --text-color: #2D3748;
+  /* Dark text */
+  --link-hover-color: #0056b3;
+  --font-main: 'Arial', sans-serif;
+  --font-size-base: 16px;
+  --border-radius: 12px;
+  /* Slightly more rounded */
+  --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
 }
 
 /* Beautiful gradient background */
 body {
-    font-family: var(--font-main);
-    line-height: 1.6;
-    color: var(--text-color);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    font-size: var(--font-size-base);
-    margin: 0;
-    padding: 0;
+  font-family: "Galindo";
+  line-height: 1.6;
+  color: var(--text-color);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  font-size: var(--font-size-base);
+  margin: 0;
+  padding: 0;
 }
 
 /* Main content area with effect */
 main {
-    max-width: 1000px;
-    margin: 30px auto;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Headeer Styles with improved design */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 30px;
-    border-radius: 0 0 20px 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 30px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 
 .navbar-brand {
-    font-size: 1.5rem !important;
-    font-weight: bold;
-    color: var(--primary-color) !important;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  font-size: 1.5rem !important;
+  font-weight: bold;
+  color: var(--primary-color) !important;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .navbar-brand:hover {
-    color: var(--secondary-color) !important;
-    text-decoration: none;
-    transform: scale(1.05);
-    transition: var(--transition);
+  color: var(--secondary-color) !important;
+  text-decoration: none;
+  transform: scale(1.05);
+  transition: var(--transition);
 }
 
 /* Navigation */
 nav ul {
-    display: flex;
-    gap: 25px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  gap: 25px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 nav ul li a {
-    color: var(--dark-color);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 10px 15px;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
+  color: var(--dark-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 10px 15px;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
 }
 
 nav ul li a:hover {
-    background: var(--primary-color);
-    color: white !important;
-    text-decoration: none;
-    transform: translateY(-2px);
+  background: var(--primary-color);
+  color: white !important;
+  text-decoration: none;
+  transform: translateY(-2px);
 }
 
 /* Links */
 a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: var(--transition);
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: var(--transition);
 }
 
 a:hover {
-    color: var(--secondary-color);
-    text-decoration: none;
+  color: var(--secondary-color);
+  text-decoration: none;
 }
 
 /* Page header */
 .page-header {
-    margin-bottom: 30px;
-    text-align: center;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 .page-header h1 {
-    margin: 0 0 10px;
-    font-size: 1.5rem;
-    color: var(--dark-color);
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  color: var(--dark-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: "galindo";
 }
 
 /* Logout form */
 #logout-form button {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 600;
-    font-size: 1rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px 15px;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-    font-family: inherit;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  font-family: inherit;
 }
 
 #logout-form button:hover {
-    background: var(--accent-color);
-    color: white;
+  background: var(--accent-color);
+  color: white;
 }
+
+
 
 /* Responsive design */
 @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        gap: 20px;
-        padding: 15px;
-    }
-    
-    .navbar-brand {
-        font-size: 1rem !important;
-    }
-    
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    main {
-        margin: 15px;
-        padding: 20px;
-    }
-    
-    .page-header h1 {
-        font-size: 2rem;
-    }
+  header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+  }
+
+  .navbar-brand {
+    font-size: 1rem !important;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  main {
+    margin: 15px;
+    padding: 20px;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+
 }
 
 .movie-icon {
-    width: 40px !important;
-    height: 40px !important;
-    color: var(--primary-color);
-    transition: var(--transition);
+  width: 40px !important;
+  height: 40px !important;
+  color: var(--primary-color);
+  transition: var(--transition);
 }
 
 .navbar-brand:hover .movie-icon {
-    color: var(--secondary-color);
-    transform: scale(1.2) rotate(10deg);
+  color: var(--secondary-color);
+  transform: scale(1.2) rotate(10deg);
 }

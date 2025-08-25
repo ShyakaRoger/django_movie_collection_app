@@ -31,12 +31,14 @@ urlpatterns = [
 
     path('watchlists/<int:pk>/update/', views.WatchlistUpdate.as_view(), name='watchlist-update'),
 
+    #delete a whole watchlist
+    path('watchlists/<int:pk>/delete/', views.WatchlistDelete.as_view(), name='watchlist-delete'),
 
     #add movie to watchlist
-    path('movie/<int:movie_id>/add_to_watchlist', views.add_to_watchlist, name='add_to_watchlist'),
+    path('movies/<int:movie_id>/add-to-watchlist/', views.add_to_watchlist, name='add_to_watchlist'),
 
     #remove movie from watchlist
-    path('movie/<int:movie_id>/remove_from_watchlist', views.remove_from_watchlist, name='remove_from_watchlist'),
+    path('watchlist/<int:watchlist_id>/remove/<int:movie_id>/', views.remove_from_watchlist, name='remove_from_watchlist'),
 
     #custom login from inside reviews
     path('accounts/login/', views.custom_login),

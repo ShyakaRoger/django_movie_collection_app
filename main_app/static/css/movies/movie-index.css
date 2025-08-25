@@ -1,23 +1,102 @@
-
-
+/* Container holding all cards */
 .card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
 }
 
+/* Each card is a clickable link */
 .card {
-  display: block;             
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 12px;
-  background: #fafafa;
-  text-decoration: none;      
-  color: inherit;
+  flex: 1 1 200px;
+  max-width: 220px;
+  width: 200px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
 }
 
-.card:hover { background: #f3f6fc; }
+.card:hover {
+  transform: scale(1.03);
+}
 
-.card-title { margin: 0 0 8px; font-size: 1.1rem; }
-.card-meta { margin: 0; padding-left: 16px; color: #555; }
-.card.empty { text-align: center; }
+/* Content inside each card */
+.card-content {
+  text-align: center;
+
+}
+
+/* Poster image wrapper */
+.movie-card {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Poster image  */
+.poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid #eee;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Movie title */
+.card-title {
+  font-size: 1rem;
+  color: #333;
+  margin-top: 0.75rem;
+}
+
+/* Overlay container */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  font-size: 0.9rem;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Show overlay on hover */
+.movie-card:hover .overlay {
+  opacity: 1;
+}
+
+
+
+
+@media (max-width: 600px) {
+  .card-container {
+    padding: 0.5rem;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .movie-card {
+    height: 200px;
+  }
+}
