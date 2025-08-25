@@ -51,7 +51,7 @@
   {% endfor %}
 </ul>
 {% endif %}
-
+<p>Uploaded by: {{ movie.user }}</p>
 <p>Genre: {{ movie.get_genre_display|default:movie.genre }}</p>
 <p>Release year: {{ movie.release_year }}</p>
 <p>Duration: {{ movie.duration }} mins</p>
