@@ -1,22 +1,35 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+<link rel="stylesheet" href="{% static 'css/signup.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
+<div class="signup-container">
     <h1>Sign Up</h1>
-</div>
-{% if error_message %}
-<p class="red-text">{{ error_message }}</p>
-{% endif %}
-<form action="" method="post" class="form-container" autocomplete="off">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <button type="submit" class="btn submit">Submit!</button>
-</form>
 
+    {% if error_message %}
+    <p class="error-text">{{ error_message }}</p>
+    {% endif %}
+
+    <form method="post" class="signup-form" autocomplete="off">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+            <div class="errorlist">{{ field.errors|join:", " }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-accent">Create Account</button>
+    </form>
+
+    <p class="login-link">
+        Already have an account? <a href="{% url 'login' %}">Log in here</a>.
+    </p>
+</div>
 {% endblock %}
