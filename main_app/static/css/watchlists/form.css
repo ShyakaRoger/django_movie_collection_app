@@ -1,0 +1,116 @@
+/* FORM CONTAINER */
+.form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 35px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+
+.movie-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+
+}
+
+.checkbox-list {
+    max-height: 250px;
+    /* fixed height */
+    overflow-y: auto;
+    /* vertical scrollbar if needed */
+    padding-right: 10px;
+    /* optional, avoid scrollbar overlap */
+    border: 1px solid #dfe6e9;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+
+.page-header h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.movie-item input[type="checkbox"] {
+    margin-right: 12px;
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 15px;
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #dfe6e9;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #2d3436;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.form-group select[multiple] {
+    height: 250px;
+    resize: vertical;
+}
+
+.btn.submit {
+    display: inline-block;
+    width: 100%;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: #0984e3;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn.submit:hover {
+    background-color: #74b9ff;
+    transform: translateY(-2px);
+}
+
+.btn.submit:active {
+    transform: translateY(0);
+}
+
+
+
+@media (max-width: 640px) {
+    .form-container {
+        padding: 25px;
+        margin: 20px;
+    }
+}

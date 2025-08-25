@@ -2,25 +2,26 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/movies/movie-index.css' %}" />
+<link rel="stylesheet" href="{% static 'css/watchlists/watchlist-index.css' %}" />
 {% endblock %}
 
 {% block content %}
 <section class="page-header">
-    <h1>My Watchlists</h1>
+    <h1>My Watchlists</h1><a href="{% url 'watchlist-create' %}">+ Watchlist</a>
     <p>{{ watchlists|length }} total</p>
+
 </section>
 <section class="list-container">
     {% for watchlist in watchlists %}
     <section class="card-container">
-        <a href="{% url 'watchlist-detail' watchlist.pk %}" class="card">{{ watchlist.title }}</a>
-        <div class="card empty">
-            <div class="card-content">
-                <p><a href="{% url 'watchlist-create' %}">New Watchlist</p>
-                <p><a href="{% url 'home' %}">Back Home</a></p>
-            </div>
-        </div>
+        <a href="{% url 'watchlist-detail' watchlist.pk %}" class="card">{{ watchlist.title }} </a>
+
     </section>
     {% endfor %}
+    <div class="card empty">
+        <div class="card-content">
+            <p><a href="{% url 'home' %}">Back Home</a></p>
+        </div>
+    </div>
 </section>
 {% endblock %}

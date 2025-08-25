@@ -1,0 +1,151 @@
+.features {
+    list-style: none;
+    padding-left: 0;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.features li {
+    font-size: 1.15rem;
+    margin-bottom: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.features li::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+}
+
+.btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #4a6fa5, #3b5c88);
+    box-shadow: 0 3px 10px rgba(58, 88, 130, 0.3);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: linear-gradient(45deg, #3b5c88, #4a6fa5);
+    box-shadow: 0 6px 16px rgba(58, 88, 130, 0.6);
+    outline: none;
+    transform: scale(1.03);
+}
+
+.btn-accent {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 15px rgba(101, 67, 232, 0.5);
+}
+
+
+.how-it-works {
+    max-width: 720px;
+    margin: 0 auto 60px;
+    padding: 0 15px;
+}
+
+.how-it-works h2 {
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #2c3e50;
+
+}
+
+.user-action {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: #eee;
+}
+
+.user-action h3 {
+    margin: 30px 0 15px;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #34495e;
+}
+
+.intro-container {
+    max-width: 720px;
+    margin: 60px auto 40px;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.intro-container h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.intro-container p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.btn-accent:hover,
+.btn-accent:focus {
+    background: linear-gradient(45deg, #2575fc, #6a11cb);
+    box-shadow: 0 6px 20px rgba(101, 67, 232, 0.7);
+
+
+}
+
+.btn-accent:active {
+    transform: scale(0.97);
+    box-shadow: 0 3px 10px rgba(101, 67, 232, 0.4);
+}
+
+.login {
+    max-width: 300px;
+    margin: 0px auto 60px;
+    padding: 30px;
+    background: #f7f9fc;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+
+}
+
+.login input[type="text"],
+.login input[type="password"],
+.login input[type="email"] {
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+.login h1 {
+    font-size: 22px;
+}
+
+
+
+@media (max-width: 640px) {
+    .intro-container h1 {
+        font-size: 2rem;
+    }
+
+    .user-action h3 {
+        font-size: 1.1rem;
+    }
+
+    .login {
+        margin: 30px 20px 50px;
+        padding: 24px 20px;
+    }
+
+    .how-it-works {
+        padding: 0 10px;
+    }
+}

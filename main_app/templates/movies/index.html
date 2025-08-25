@@ -15,15 +15,23 @@
   {% for movie in movies %}
   <a href="{% url 'movie-detail' movie.pk %}" class="card">
     <div class="card-content">
-      <h2 class="card-title">{{ movie.title }}</h2>
-      <ul class="card-meta">
-        <li>Genre: {{ movie.get_genre_display|default:movie.genre }}</li>
-        <li>Year: {{ movie.release_year }}</li>
-        <li>Duration: {{ movie.duration }} mins</li>
-        <li>Rating: {{ movie.get_rating_display|default:movie.rating }}</li>
-      </ul>
+      <h3 class="card-title">{{ movie.title }}</h3>
+
+      <div class="movie-card">
+        {% if movie.poster_url %}
+        <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster" class="poster-img">
+        {% else %}
+        <img src="{% static 'images/default-poster.jpg' %}" alt="No poster available" class="poster-img">
+        {% endif %}
+        <div class="overlay">
+          <p><strong>{{ movie.get_genre_display }}</strong></p>
+          <p>📆 {{ movie.release_year }}</p>
+          <p>{{ movie.comments|length}} comments</p>
+        </div>
+      </div>
     </div>
   </a>
+
   {% empty %}
   <div class="card empty">
     <div class="card-content">
@@ -33,4 +41,7 @@
   </div>
   {% endfor %}
 </section>
+<div class="card">
+  <p><a href="{% url 'movie-create' %}">Add More Movies + </p>
+</div>
 {% endblock %}
