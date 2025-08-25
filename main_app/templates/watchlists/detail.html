@@ -9,34 +9,37 @@
 <h1>{{ watchlist.title }}</h1>
 
 <section class="card-container">
-    {% for movie in watchlist.movies.all %}
+  {% for movie in watchlist.movies.all %}
     <div class="card-content">
-        <h2 class="card-title">{{ movie.title }}</h2>
-        <div class="movie-card">
-            {% if movie.poster_url %}
-            <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster" class="poster-img">
-            {% else %}
-            <img src="{% static 'images/default-poster.jpg' %}" alt="No poster available" class="poster-img">
-            {% endif %}
-        </div>
+      <h2 class="card-title">{{ movie.title }}</h2>
+      <div class="movie-card">
+        {% if movie.poster_url %}
+          <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster" class="poster-img">
+        {% else %}
+          <img src="{% static 'images/default-poster.jpg' %}" alt="No poster available" class="poster-img">
+        {% endif %}
+      </div>
 
+      {% if user.is_authenticated and watchlist.user_id == user.id %}
         <form method="POST" action="{% url 'remove_from_watchlist' watchlist.id movie.id %}" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-link text-danger" title="Remove">
-                <i class="fa fa-trash">Remove</i>
-            </button>
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-link text-danger" title="Remove">
+            <i class="fa fa-trash">Remove</i>
+          </button>
         </form>
+      {% endif %}
     </div>
-    {% empty %}
-    <li>No movies in this watchlist yet.</li>
-    {% endfor %}
-    </ul>
-    {% if user.is_authenticated %}
+  {% empty %}
+    <p>No movies in this watchlist yet.</p>
+  {% endfor %}
+
+  {% if user.is_authenticated and watchlist.user_id == user.id %}
     <div class="watchlist-actions">
-        <a href="{% url 'watchlist-update' watchlist.id %}" class="btn warn">Edit Watchlist</a>
-        <a href="{% url 'watchlist-delete' watchlist.id %}" class="btn danger">Delete Watchlist</a>
+      <a href="{% url 'watchlist-update' watchlist.id %}" class="btn warn">Edit Watchlist</a>
+      <a href="{% url 'watchlist-delete' watchlist.id %}" class="btn danger">Delete Watchlist</a>
     </div>
-    <a href="{% url 'user-watchlists' %}">Back</a>
-    {% endif %}
+  {% endif %}
+
+  <a href="{% url 'user-watchlists' %}">Back</a>
 </section>
 {% endblock %}

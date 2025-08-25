@@ -56,7 +56,8 @@
 <p>Release year: {{ movie.release_year }}</p>
 <p>Duration: {{ movie.duration }} mins</p>
 
-{% if user.is_authenticated %}
+{# Show edit/delete ONLY to the owner of the movie #}
+{% if user.is_authenticated and movie.user_id == user.id %}
   <div class="movie-actions">
     <a href="{% url 'movie-update' movie.id %}" class="btn warn">Edit Movie</a>
     <a href="{% url 'movie-delete' movie.id %}" class="btn danger">Delete Movie</a>
@@ -79,7 +80,8 @@
       {% endif %}
       <small>{{ review.created_at }}</small>
 
-      {% if user.is_authenticated %}
+      {# Only the author of the review sees delete #}
+      {% if user.is_authenticated and review.author_id == user.id %}
         <div>
           <form action="{% url 'review-delete' review.id %}" method="POST">
             {% csrf_token %}
