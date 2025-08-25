@@ -27,7 +27,7 @@ Created by **Kylie** and **Roger**
 
 - **Backend:** Django, Python
 - **Database:** SQLite (default),switched to PostgreSQL
-- **Frontend:** Django templates (HTML, CSS, optional SVGs for movie covers)
+- **Frontend:** Django templates (HTML, CSS, optional  for movie covers)
 - **Auth:** Django’s built-in session-based authentication (Signup/Login/Logout)
 
 

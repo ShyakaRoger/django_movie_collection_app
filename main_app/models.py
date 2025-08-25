@@ -90,7 +90,7 @@ class Watchlist(models.Model):
         User, on_delete=models.CASCADE, related_name='watchlists'
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f"{self.user.username}'s Watchlist"
     
