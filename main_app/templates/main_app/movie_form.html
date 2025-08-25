@@ -46,6 +46,12 @@
         {{ form.rating.errors }}
     </div>
 
+    <div class="form-group">
+        {{ form.poster_url.label_tag }}
+        {{ form.poster_url }}
+
+    </div>
+
     <button type="submit" class="btn submit">
         {% if form.instance.pk %}Update Movie{% else %}Add Movie{% endif %}
     </button>

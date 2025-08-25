@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="{% static 'css/watchlists/form.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,14 @@
 
     <div class="form-group">
         <strong>Select Movies:</strong>
-        {{ form.movies }}
+        <div class="checkbox-list">
+            {% for checkbox in form.movies %}
+            <label class="movie-item">
+                {{ checkbox.tag }}
+                {{ checkbox.choice_label }}
+            </label>
+            {% endfor %}
+        </div>
     </div>
 
     <button type="submit" class="btn submit">

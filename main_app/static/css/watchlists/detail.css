@@ -1,0 +1,108 @@
+h1 {
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2rem;
+    color: #333;
+}
+
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    padding: 1rem 2rem;
+}
+
+
+.card-content {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 200px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    margin: 0.5rem 0 1rem;
+    color: #333;
+}
+
+.poster-img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+
+form button {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+form button:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+form i.fa-trash {
+    margin-right: 0.3rem;
+}
+
+
+.watchlist-actions {
+    text-align: center;
+    margin: 2rem 0 1rem;
+}
+
+.watchlist-actions .btn {
+    display: inline-block;
+    margin: 0 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn.warn {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.btn.danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+
+a[href$="user-watchlists"] {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #007bff;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* Responsive Poster Cards */
+@media (max-width: 600px) {
+    .card-content {
+        width: 100%;
+        max-width: 90%;
+    }
+
+    .poster-img {
+        height: auto;
+    }
+}

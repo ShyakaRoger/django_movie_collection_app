@@ -173,16 +173,15 @@ class MovieCreate(LoginRequiredMixin, CreateView):
     template_name = 'main_app/movie_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('movie-detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('movie-detail', kwargs={'movie_id': self.object.pk})
 
 
 class MovieUpdate(LoginRequiredMixin, UpdateView):
     model = Movie
     form_class = MovieForm
     template_name = 'main_app/movie_form.html'
+    success_url = '/movies/'
 
-    def get_success_url(self):
-        return reverse_lazy('movie-detail', kwargs={'pk': self.object.pk})
 
 class MovieDelete(LoginRequiredMixin, DeleteView):
     model = Movie

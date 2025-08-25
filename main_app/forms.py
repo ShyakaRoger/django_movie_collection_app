@@ -23,7 +23,7 @@ class WatchlistForm(forms.ModelForm):
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = ['title', 'genre', 'duration', 'release_year']
+        fields = ['title', 'genre', 'duration', 'release_year', 'poster_url']
       
         
         

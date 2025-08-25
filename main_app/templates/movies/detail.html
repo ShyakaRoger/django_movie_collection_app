@@ -6,14 +6,18 @@
 <link rel="stylesheet" href="{% static 'css/movies/detail.css' %}" />
 {% endblock %}
 
-
 {% block content %}
-
-<h1>{{ movie.title }}</h1>
+<div class="movie-detail-header">
+  <h1>{{ movie.title }}</h1>
+  {% if movie.poster_url %}
+  <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster" class="poster-img">
+  {% else %}
+  <img src="{% static 'images/default-poster.jpg' %}" alt="No poster available" class="poster-img">
+  {% endif %}
+</div>
 
 <form method="POST" action="{% url 'add_to_watchlist' movie.id %}">
   {% csrf_token %}
-
   <div class="select-wrapper">
     <select id="watchlist" name="watchlist_id" required>
       <option selected disabled value="">Add to Watchlist</option>
