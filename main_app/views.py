@@ -39,7 +39,6 @@ def signup(request):
     return render(request, "signup.html", {"form": form})
 
 # Define the about view function
-
 def about(request):
     return render(request, 'about.html')
 
@@ -74,52 +73,49 @@ def movie_detail(request, movie_id):
         'movies/detail.html',
         {'movie': movie, 'form': form, 'watchlists': user_watchlists})
 
-
 # Add review feature
-
 @login_required
 def add_review(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
-    if request.method == "POST":
+
+    if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
-            review = form.save(commit=False)
-            review.movie = movie
-            review.user = request.user  # set owner
-            review.save()
-            return redirect("movie-detail", movie_id=movie.id)
+            Review.objects.create(
+                movie=movie,
+                author=request.user,
+                rating=form.cleaned_data['rating'],
+                comment=form.cleaned_data['comment']
+            )
+            return redirect('movie-detail', movie_id=movie.id)
     else:
         form = ReviewForm()
-    return render(request, "reviews/review_form.html", {"form": form, "movie": movie, "mode": "Add"})
+    return render(request, 'movies/detail.html', {'movie': movie, 'form': form, 'mode': 'Add'})
 
-
-#All reviews
-
+# All reviews
 def all_reviews(request):
-    # Public page: anyone can see all reviews
     reviews = (
-        Review.objects.select_related("movie", "user")
-        .order_by("-created_at")
+        Review.objects
+        .select_related('movie', 'author')
+        .order_by('-created_at')
     )
-    return render(request, "reviews/all_reviews.html", {"reviews": reviews})  
+    return render(request, 'reviews/all_reviews.html', {'reviews': reviews})   
 
 @login_required
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
-    if review.user_id != request.user.id:
-        # hide existence if not owner
-        raise Http404()
-    if request.method == "POST":
-        movie_id = review.movie_id
-        review.delete()
-        return redirect("movie-detail", movie_id=movie_id)
-    # optional: confirm template
-    return render(request, "reviews/review_confirm_delete.html", {"review": review})
+    if review.author_id != request.user.id:
+        messages.error(request, "You can only delete your own reviews.")
+        return redirect('movie-detail', movie_id=review.movie_id)
+    movie_id = review.movie_id
+    review.delete()
+    messages.success(request, "Review deleted.")
+    return redirect('movie-detail', movie_id=movie_id)
 
 @login_required
 def watchlist_index(request):
-        user_watchlists = Watchlist.objects.filter(user=request.user)
-        return render(request, 'watchlists/watchlist.html', {'watchlists': user_watchlists})
+    user_watchlists = Watchlist.objects.filter(user=request.user)
+    return render(request, 'watchlists/watchlist.html', {'watchlists': user_watchlists})
 
 @login_required
 def watchlist_detail(request, pk):
@@ -161,7 +157,7 @@ def remove_from_watchlist(request, watchlist_id, movie_id):
         messages.info(request, f"'{movie.title}' is not in '{watchlist.title}'.")
 
     return redirect('watchlist-detail', pk=watchlist_id)
-    
+
 class WatchlistCreate(LoginRequiredMixin, CreateView):
     model = Watchlist
     form_class = WatchlistForm
@@ -188,6 +184,9 @@ class WatchlistUpdate(LoginRequiredMixin, UpdateView):
 class WatchlistDelete(LoginRequiredMixin, DeleteView):
     model = Watchlist
     success_url = '/watchlists/'
+    # NEW: restrict delete to the owner's watchlists
+    def get_queryset(self):
+        return Watchlist.objects.filter(user=self.request.user)
 
 class MovieCreate(LoginRequiredMixin, CreateView):
     model = Movie
@@ -195,12 +194,11 @@ class MovieCreate(LoginRequiredMixin, CreateView):
     template_name = 'main_app/movie_form.html'
 
     def form_valid(self, form):
-        form.instance.user = self.request.user  # <- set the  owner
+        form.instance.user = self.request.user  # <- setting the  owner
         return super().form_valid(form)
     
     def get_success_url(self):
         return reverse_lazy('movie-detail', kwargs={'movie_id': self.object.pk})
-
 
 class MovieUpdate(LoginRequiredMixin, UpdateView):
     model = Movie
@@ -215,12 +213,11 @@ class MovieUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('movie-detail', kwargs={'movie_id': self.object.pk})
 
-
 class MovieDelete(LoginRequiredMixin, DeleteView):
     model = Movie
     pk_url_kwarg = 'movie_id'
     success_url = reverse_lazy('movie-index')
 
     def get_queryset(self):
+        # NEW: already owner-restricted (kept for clarity/consistency)
         return Movie.objects.filter(user=self.request.user)
-
