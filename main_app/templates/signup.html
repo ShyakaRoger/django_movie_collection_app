@@ -7,15 +7,15 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Sign Up</h1>
+  <h1>Sign Up</h1>
 </div>
 
-{# Show custom error message if passed from the view #}
+{# Optional banner from view #}
 {% if error_message %}
   <p class="red-text">{{ error_message }}</p>
 {% endif %}
 
-{# Show Django form validation errors #}
+{# Show validation errors clearly #}
 {% if form.errors or form.non_field_errors %}
   <div class="error-messages">
     <ul>
@@ -30,10 +30,10 @@
 {% endif %}
 
 <form action="" method="post" class="form-container" autocomplete="off">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <button type="submit" class="btn submit">Submit!</button>
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+  </table>
+  <button type="submit" class="btn submit">Submit!</button>
 </form>
 {% endblock %}
