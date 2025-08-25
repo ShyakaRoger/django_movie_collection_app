@@ -3,6 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import login
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,21 +23,20 @@ def custom_login(request):
     return redirect('home')
 
 def signup(request):
-    error_message = ''
-    if request.method == 'POST':
-        # create a user form object 
-        form = UserCreationForm(request.POST)
+    form = UserCreationForm(request.POST or None)
+
+    if request.method == "POST":
         if form.is_valid():
-            # add user to the database
             user = form.save()
-            # log the user in
             login(request, user)
-            return redirect('movie-index')
+            messages.success(request, "Your account was created. Welcome!")
+            return redirect("movie-index")
         else:
-            error_message = 'Invalid sign up - try again'
-    form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message}
-    return render(request, 'signup.html', context)
+            # Show a banner on the page and log details to Heroku stdout
+            messages.error(request, "Please fix the errors below.")
+            print("Signup validation errors:", form.errors)  
+
+    return render(request, "signup.html", {"form": form})
 
 # Define the about view function
 
