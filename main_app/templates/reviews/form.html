@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+
 {% block content %}
-  <h1>{{ mode }} Review for “{{ movie.title }}”</h1>
-  <form method="post">
-    {% csrf_token %}
-    <p>Rating (1–5): {{ form.rating }}</p>
-    <p>Comment: {{ form.comment }}</p>
-    <button type="submit">{{ mode }}</button>
-  </form>
+<h1>{{ mode }} Review for “{{ movie.title }}”</h1>
+<form method="post">
+  {% csrf_token %}
+  <p>Rating (1–5): {{ form.rating }}</p>
+  <p>Comment: {{ form.comment }}</p>
+  <button type="submit" class="btn submit">{{ mode }}</button>
+</form>
 {% endblock %}

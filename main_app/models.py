@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # create genre choices and rating choices for the Movie model
 # create movie model 
@@ -47,11 +48,6 @@ class Movie(models.Model):
     )
     duration = models.PositiveIntegerField(help_text='minutes')
     release_year = models.PositiveIntegerField()
-    rating = models.CharField(
-        max_length=1,
-        choices=RATING_CHOICES,
-        default='0',
-    )
     comments = models.TextField(max_length=500, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -73,7 +69,7 @@ class Review(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='reviews'
     )
-    rating = models.PositiveSmallIntegerField()  # 1–5 in the form
+    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])  # 1–5 in the form
     comment = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
