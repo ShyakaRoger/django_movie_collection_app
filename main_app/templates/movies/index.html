@@ -26,7 +26,7 @@
         <div class="overlay">
           <p><strong>{{ movie.get_genre_display }}</strong></p>
           <p>📆 {{ movie.release_year }}</p>
-          <p>{{ movie.comments|length}} comments</p>
+          <p>{{ movie.reviews.count}} reviews</p>
         </div>
       </div>
     </div>
