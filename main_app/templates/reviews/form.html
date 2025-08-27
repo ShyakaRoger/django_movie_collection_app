@@ -1,22 +1,11 @@
 {% extends "base.html" %}
+
 {% block content %}
-  <h1>{{ mode }} Review for “{{ movie.title }}”</h1>
-
-  {% if form.errors %}
-    <div class="form-errors">
-      {{ form.non_field_errors }}
-      {% for field in form %}
-        {% if field.errors %}
-          <p><strong>{{ field.label }}:</strong> {{ field.errors|join:", " }}</p>
-        {% endif %}
-      {% endfor %}
-    </div>
-  {% endif %}
-
-  <form method="post">
-    {% csrf_token %}
-    <p>Rating (1–5): {{ form.rating }}</p>
-    <p>Comment: {{ form.comment }}</p>
-    <button type="submit">{{ mode }}</button>
-  </form>
+<h1>{{ mode }} Review for “{{ movie.title }}”</h1>
+<form method="post">
+  {% csrf_token %}
+  <p>Rating (1–5): {{ form.rating }}</p>
+  <p>Comment: {{ form.comment }}</p>
+  <button type="submit" class="btn submit">{{ mode }}</button>
+</form>
 {% endblock %}

@@ -213,6 +213,10 @@ class MovieUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('movie-detail', kwargs={'movie_id': self.object.pk})
 
+    def get_success_url(self):
+        return reverse_lazy('movie-detail', kwargs={'movie_id': self.object.pk})
+
+
 class MovieDelete(LoginRequiredMixin, DeleteView):
     model = Movie
     pk_url_kwarg = 'movie_id'

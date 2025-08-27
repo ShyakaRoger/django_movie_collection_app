@@ -1,34 +1,39 @@
 {% extends "base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/reviews.css' %}" />
+{% endblock %}
+
 {% block content %}
 <h1>All Reviews</h1>
 
 {% if reviews %}
-  <div class="reviews-list">
-    {% for review in reviews %}
-      <div class="review-card">
-        <h3>
-          <a href="{% url 'movie-detail' review.movie.id %}">
-            {{ review.movie.title }}
-          </a>
-        </h3>
-        <p>
-          <strong>{{ review.author.username }}</strong> — {{ review.rating }}/5
-          <small>({{ review.created_at }})</small>
-        </p>
-        {% if review.comment %}
-          <p>{{ review.comment|linebreaksbr }}</p>
-        {% endif %}
+<div class="reviews-list">
+  {% for review in reviews %}
+  <div class="review-card">
+    <h3>
+      <a href="{% url 'movie-detail' review.movie.id %}">
+        {{ review.movie.title }}
+      </a>
+    </h3>
+    <p>
+      <strong>{{ review.author.username }}</strong> — {{ review.rating }}/5
+      <small>({{ review.created_at }})</small>
+    </p>
+    {% if review.comment %}
+    <p>{{ review.comment|linebreaksbr }}</p>
+    {% endif %}
 
-        {% if user.is_authenticated and review.author_id == user.id %}
-          <form action="{% url 'review-delete' review.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Delete Review</button>
-          </form>
-        {% endif %}
-      </div>
-    {% endfor %}
+    {% if user.is_authenticated %}
+    <form action="{% url 'review-delete' review.id %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn submit">Delete My Review</button>
+    </form>
+    {% endif %}
   </div>
+  {% endfor %}
+</div>
 {% else %}
-  <p>No reviews yet.</p>
+<p>No reviews yet.</p>
 {% endif %}
 {% endblock %}
