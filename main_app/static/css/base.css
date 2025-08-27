@@ -6,7 +6,6 @@
   font-style: normal;
 }
 
-
 :root {
   --primary-color: #1f6feb;
   --secondary-color: #8A2BE2;
@@ -68,7 +67,6 @@ header {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-
 .navbar-brand {
   font-size: 1.5rem !important;
   font-weight: bold;
@@ -89,6 +87,8 @@ header {
 /* Navigation */
 nav ul {
   display: flex;
+  align-items: center;
+  /* NEW: keep items on the same line vertically centered */
   gap: 25px;
   list-style: none;
   margin: 0;
@@ -141,27 +141,34 @@ a:hover {
   font-family: "galindo";
 }
 
-/* Logout form */
+/* Logout form (inline in nav, blue like other buttons) */
+#logout-form {
+  margin: 0;
+  display: inline-flex;
+  /* keeps it on the same line as other nav items */
+  align-items: center;
+}
+
 #logout-form button {
-  text-decoration: none;
-  color: var(--text-color);
+  font-family: inherit;          /* ← same font as the rest (Galindo) */
+  background: var(--primary-color);
+  color: #fff;
   font-weight: 600;
   font-size: 1rem;
-  background: none;
   border: none;
   cursor: pointer;
   padding: 10px 15px;
   border-radius: var(--border-radius);
   transition: var(--transition);
-  font-family: inherit;
+  line-height: 1;
 }
 
 #logout-form button:hover {
-  background: var(--accent-color);
-  color: white;
+  background: var(--link-hover-color);
+  /* darker blue on hover */
+  color: #fff;
+  transform: translateY(-2px);
 }
-
-
 
 /* Responsive design */
 @media (max-width: 768px) {
@@ -189,7 +196,6 @@ a:hover {
   .page-header h1 {
     font-size: 2rem;
   }
-
 }
 
 .movie-icon {
